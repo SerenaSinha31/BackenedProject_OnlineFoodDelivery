@@ -1,25 +1,2 @@
-namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Order;
-
-class OrderController extends Controller
-{
-    public function placeOrder(Request $request) {
-        $request->validate([
-            'food_id' => 'required|exists:foods,id',
-            'quantity' => 'required|integer|min:1',
-        ]);
-
-        return Order::create([
-            'user_id' => auth()->id(),
-            'food_id' => $request->food_id,
-            'quantity' => $request->quantity,
-        ]);
-    }
-
-    public function myOrders() {
-        return Order::with('food')->where('user_id', auth()->id())->get();
-    }
-}
 
